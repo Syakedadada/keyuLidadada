@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李科余 — 项目文案策划 & 新媒体运营 · 个人作品集</title>
+<link rel="stylesheet" href="https://static-resources.nuwax.com/tailwind.min.css">
+<link rel="stylesheet" href="https://static-resources.nuwax.com/g-fonts.css">
+<script src="https://static-resources.nuwax.com/echarts.min.js"></script>
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --bg-deep: #08090b;
+  --bg-card: #111318;
+  --bg-card-hover: #181a22;
+  --border: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.1);
+  --text-primary: #e8e4dd;
+  --text-secondary: #a09b93;
+  --text-muted: #6b6560;
+  --accent: #d4a853;
+  --accent-glow: rgba(212,168,83,0.15);
+  --accent-strong: #e8c16e;
+  --cyan: #5ec4c4;
+  --rose: #e8786e;
+  --violet: #9b8fd4;
+  --green: #7ec87e;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+/* ===== Fonts ===== */
+.font-display { font-family: 'Playfair Display', 'Noto Serif SC', serif; }
+.font-body { font-family: 'Noto Sans SC', 'Inter', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+/* ===== Base ===== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Noto Sans SC', 'Inter', sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== Grain Texture Overlay ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* ===== Keyframes ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(212,168,83,0.2); }
+  50% { border-color: rgba(212,168,83,0.5); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.anim-up { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.anim-in { animation: fadeIn 0.8s ease forwards; opacity: 0; }
+.anim-left { animation: slideInLeft 0.8s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.anim-right { animation: slideInRight 0.8s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.anim-scale { animation: scaleUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== Navigation ===== */
+.nav-blur {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(8,9,11,0.72);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== Glass Card ===== */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+/* ===== Accent Border Glow ===== */
+.accent-border {
+  position: relative;
+}
+.accent-border::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.4;
+}
+
+/* ===== Metric Number ===== */
+.metric-number {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Image Card ===== */
+.img-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.img-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+.img-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.img-card:hover img {
+  transform: scale(1.04);
+}
+.img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,9,11,0.9) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+.img-card:hover .img-overlay {
+  opacity: 1;
+}
+
+/* ===== Timeline ===== */
+.timeline-line {
+  position: absolute;
+  left: 11px;
+  top: 28px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+.timeline-dot {
+  position: absolute;
+  left: 4px;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  border: 3px solid var(--bg-deep);
+}
+
+/* ===== Project Card ===== */
+.project-card {
+  position: relative;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  cursor: pointer;
+}
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.project-card .project-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-style: italic;
+  color: rgba(212,168,83,0.08);
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  line-height: 1;
+  transition: color 0.4s ease;
+}
+.project-card:hover .project-number {
+  color: rgba(212,168,83,0.18);
+}
+
+/* ===== Tag ===== */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-secondary);
+  transition: all 0.25s ease;
+}
+.tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* ===== Section Divider ===== */
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin: 0 auto;
+}
+
+/* ===== Cursor Glow ===== */
+.cursor-glow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,168,83,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+/* ===== Modal / Lightbox ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: scale(0.9);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.lightbox.active img {
+  transform: scale(1);
+}
+
+/* ===== Marquee ===== */
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ===== Mobile Adjustments ===== */
+@media (max-width: 768px) {
+  .project-card .project-number { font-size: 3rem; right: 8px; }
+  .timeline-line { left: 9px; }
+  .timeline-dot { left: 2px; width: 14px; height: 14px; }
+}
+
+/* ===== Section Label ===== */
+.section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== Link Hover ===== */
+a.accent-link {
+  color: var(--accent);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.25s ease;
+}
+a.accent-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: right;
+}
+a.accent-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+</style>
+</head>
+<body>
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3 group">
+      <div class="w-8 h-8 rounded-lg border-2 flex items-center justify-center transition-all duration-300" style="border-color: var(--accent);">
+        <span class="text-sm font-bold" style="color: var(--accent); font-family: 'Playfair Display', serif;">S</span>
+      </div>
+      <span class="font-display italic text-lg hidden sm:inline" style="color: var(--text-primary);">Sans Li</span>
+    </a>
+    <div class="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-1.5 py-1.5">
+      <a href="#about" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">关于</a>
+      <a href="#experience" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">经历</a>
+      <a href="#skills" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">技能</a>
+      <a href="#projects" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">项目</a>
+      <a href="#awards" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">荣誉</a>
+    </div>
+    <a href="#contact" class="hidden md:block px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105" style="background: var(--accent); color: #0a0a0a;">联系我</a>
+    <button class="md:hidden text-white/80 hover:text-white p-1" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 bg-black/95 px-5 py-4 space-y-2">
+    <a href="#about" class="block py-2 text-white/70 hover:text-white" onclick="document.getElementById('mobileMenu').classList.add('hidden')">关于</a>
+    <a href="#experience" class="block py-2 text-white/70 hover:text-white" onclick="document.getElementById('mobileMenu').classList.add('hidden')">经历</a>
+    <a href="#skills" class="block py-2 text-white/70 hover:text-white" onclick="document.getElementById('mobileMenu').classList.add('hidden')">技能</a>
+    <a href="#projects" class="block py-2 text-white/70 hover:text-white" onclick="document.getElementById('mobileMenu').classList.add('hidden')">项目</a>
+    <a href="#awards" class="block py-2 text-white/70 hover:text-white" onclick="document.getElementById('mobileMenu').classList.add('hidden')">荣誉</a>
+    <a href="#contact" class="block py-2 font-semibold" style="color: var(--accent);" onclick="document.getElementById('mobileMenu').classList.add('hidden')">联系我</a>
+  </div>
+</nav>
+
+<!-- ===== Hero Section ===== -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden" style="background: radial-gradient(ellipse 80% 50% at 50% -15%, rgba(212,168,83,0.06) 0%, transparent 70%), var(--bg-deep);">
+  <!-- Decorative lines -->
+  <div class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, rgba(212,168,83,0.3), transparent);"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);"></div>
+
+  <!-- Floating elements -->
+  <div class="absolute top-20 left-10 w-32 h-32 rounded-full opacity-[0.03]" style="background: radial-gradient(circle, var(--accent), transparent 70%); animation: float 6s ease-in-out infinite;"></div>
+  <div class="absolute bottom-40 right-16 w-48 h-48 rounded-full opacity-[0.03]" style="background: radial-gradient(circle, var(--accent), transparent 70%); animation: float 8s ease-in-out infinite 2s;"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-32 text-center">
+    <!-- Status badge -->
+    <div class="anim-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-medium mb-8" style="animation-delay: 0.1s; border-color: rgba(212,168,83,0.3); color: var(--accent); background: rgba(212,168,83,0.06);">
+      <span class="w-2 h-2 rounded-full" style="background: var(--accent); animation: pulse 2s ease-in-out infinite;"></span>
+      开放合作 · Open to Opportunities
+    </div>
+
+    <!-- Name -->
+    <h1 class="anim-up font-display italic font-normal" style="animation-delay: 0.2s; font-size: clamp(3rem, 8vw, 7rem); line-height: 1.05; letter-spacing: -0.03em;">
+      <span style="color: var(--text-primary);">李科余</span>
+    </h1>
+    <p class="anim-up mt-4 text-lg sm:text-xl" style="animation-delay: 0.3s; color: var(--text-secondary); letter-spacing: 0.08em;">
+      项目文案策划 &amp; 新媒体运营
+    </p>
+
+    <!-- Key Metrics -->
+    <div class="anim-up flex flex-wrap justify-center gap-8 sm:gap-16 mt-12" style="animation-delay: 0.45s;">
+      <div class="text-center">
+        <div class="metric-number" style="font-size: clamp(2rem, 4vw, 3rem); color: var(--accent); font-weight: 300;">4+</div>
+        <div class="text-xs mt-2" style="color: var(--text-muted);">年全链路经验</div>
+      </div>
+      <div class="text-center">
+        <div class="metric-number" style="font-size: clamp(2rem, 4vw, 3rem); color: var(--accent); font-weight: 300;">30<span style="font-size: 0.6em;">W+</span></div>
+        <div class="text-xs mt-2" style="color: var(--text-muted);">品牌曝光量</div>
+      </div>
+      <div class="text-center">
+        <div class="metric-number" style="font-size: clamp(2rem, 4vw, 3rem); color: var(--accent); font-weight: 300;">50+</div>
+        <div class="text-xs mt-2" style="color: var(--text-muted);">场线下活动</div>
+      </div>
+      <div class="text-center">
+        <div class="metric-number" style="font-size: clamp(2rem, 4vw, 3rem); color: var(--accent); font-weight: 300;">95<span style="font-size: 0.6em;">%</span></div>
+        <div class="text-xs mt-2" style="color: var(--text-muted);">客户满意度</div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="anim-in absolute bottom-8 left-1/2 -translate-x-1/2" style="animation-delay: 1s;">
+      <div class="w-6 h-10 rounded-full border border-white/15 flex justify-center pt-2.5">
+        <div class="w-1 h-2 rounded-full" style="background: var(--accent); animation: fadeUp 1.4s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About Section ===== -->
+<section id="about" class="py-24 sm:py-32 px-5 sm:px-8 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <div class="section-label">About</div>
+      <h2 class="font-display italic text-4xl sm:text-5xl mb-6" style="letter-spacing: -0.02em;">关于我</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="reveal grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      <!-- Left: Intro -->
+      <div class="lg:col-span-7 space-y-6">
+        <p class="text-lg leading-relaxed" style="color: var(--text-secondary);">
+          4年品牌策划与项目文案全链路经验，独立操盘数十场线下活动全案、品牌传播方案与IP内容策划，覆盖<span style="color: var(--accent);">社区项目、学校、公益、文创、文旅、金融</span>等多个领域。
+        </p>
+        <p class="text-lg leading-relaxed" style="color: var(--text-secondary);">
+          具备从需求调研、方案撰写、落地执行到效果复盘的完整能力，擅长精准对接B端客户需求，输出可落地的策划方案与文案内容，累计服务客户满意度达<span style="color: var(--accent);">95%以上</span>。
+        </p>
+        <p class="text-lg leading-relaxed" style="color: var(--text-secondary);">
+          兼具新媒体内容创作与视频全链路制作能力，精通脚本策划、现场拍摄、后期剪辑全流程，操盘小红书等平台账号运营，打造单条<span style="color: var(--accent);">10W+播放</span>爆款内容。
+        </p>
+      </div>
+
+      <!-- Right: Quick Info -->
+      <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+        <div class="glass-card p-5 flex flex-col items-center text-center">
+          <div class="text-2xl mb-2">📍</div>
+          <div class="text-xs" style="color: var(--text-muted);">工作地点</div>
+          <div class="text-sm font-medium mt-1">四川省成都市</div>
+        </div>
+        <div class="glass-card p-5 flex flex-col items-center text-center">
+          <div class="text-2xl mb-2">🎓</div>
+          <div class="text-xs" style="color: var(--text-muted);">学历</div>
+          <div class="text-sm font-medium mt-1">成都体育学院</div>
+          <div class="text-xs" style="color: var(--text-muted);">运动训练 · 本科</div>
+        </div>
+        <div class="glass-card p-5 flex flex-col items-center text-center">
+          <div class="text-2xl mb-2">📅</div>
+          <div class="text-xs" style="color: var(--text-muted);">年龄</div>
+          <div class="text-sm font-medium mt-1">27岁</div>
+        </div>
+        <div class="glass-card p-5 flex flex-col items-center text-center">
+          <div class="text-2xl mb-2">🎯</div>
+          <div class="text-xs" style="color: var(--text-muted);">求职方向</div>
+          <div class="text-sm font-medium mt-1">项目文案策划</div>
+          <div class="text-xs" style="color: var(--text-muted);">新媒体运营</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Experience Timeline ===== -->
+<section id="experience" class="py-24 sm:py-32 px-5 sm:px-8" style="background: rgba(255,255,255,0.01);">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <div class="section-label">Experience</div>
+      <h2 class="font-display italic text-4xl sm:text-5xl mb-6" style="letter-spacing: -0.02em;">工作经历</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="relative space-y-12">
+      <!-- Timeline central line (desktop) -->
+      <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-px" style="background: linear-gradient(to bottom, var(--accent), transparent 80%);"></div>
+
+      <!-- Experience 1: 新华保险 -->
+      <div class="reveal relative flex flex-col lg:flex-row items-start gap-6 lg:gap-0">
+        <div class="hidden lg:flex absolute left-1/2 top-8 w-3 h-3 rounded-full -translate-x-1/2" style="background: var(--accent); box-shadow: 0 0 16px var(--accent-glow);"></div>
+        <div class="lg:w-1/2 lg:pr-16 lg:text-right">
+          <div class="glass-card p-6 sm:p-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(212,168,83,0.1); color: var(--accent);">2025.10 — 2026.06</div>
+            <h3 class="text-xl font-bold mb-1">新华保险四川分公司</h3>
+            <p class="text-sm mb-4" style="color: var(--accent);">团队活动策划 / 团队内容运营</p>
+            <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>从0到1搭建品牌自媒体矩阵，全平台累计曝光30W+，品牌搜索量提升45%</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>策划统筹50+场线下品牌沙龙和行业分享会</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>产出品牌宣传片、活动纪实、科普类短视频50+条</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hidden lg:block lg:w-1/2 lg:pl-16"></div>
+      </div>
+
+      <!-- Experience 2: 白色失明 -->
+      <div class="reveal relative flex flex-col lg:flex-row items-start gap-6 lg:gap-0">
+        <div class="hidden lg:flex absolute left-1/2 top-8 w-3 h-3 rounded-full -translate-x-1/2" style="background: var(--accent); box-shadow: 0 0 16px var(--accent-glow);"></div>
+        <div class="hidden lg:block lg:w-1/2 lg:pr-16"></div>
+        <div class="lg:w-1/2 lg:pl-16">
+          <div class="glass-card p-6 sm:p-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(212,168,83,0.1); color: var(--accent);">2023.03 — 2025.10</div>
+            <h3 class="text-xl font-bold mb-1">成都白色失明文化艺术有限公司</h3>
+            <p class="text-sm mb-4" style="color: var(--accent);">创意策划 / 新媒体运营</p>
+            <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>主导文创IP「文字麻将」全生命周期品牌策划</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>策划6档S级综艺跨界联动，推动IP植入《密室大逃脱7》《奔跑吧》等头部综艺</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>打造10W+爆款内容，单条视频最高播放10W+、获赞1.3W</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>小红书全平台内容策划与运营</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience 3: 捷中友益 -->
+      <div class="reveal relative flex flex-col lg:flex-row items-start gap-6 lg:gap-0">
+        <div class="hidden lg:flex absolute left-1/2 top-8 w-3 h-3 rounded-full -translate-x-1/2" style="background: var(--accent); box-shadow: 0 0 16px var(--accent-glow);"></div>
+        <div class="lg:w-1/2 lg:pr-16 lg:text-right">
+          <div class="glass-card p-6 sm:p-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(212,168,83,0.1); color: var(--accent);">2022.04 — 2023.02</div>
+            <h3 class="text-xl font-bold mb-1">成都捷中友益文化传播中心</h3>
+            <p class="text-sm mb-4" style="color: var(--accent);">项目策划 / 运营</p>
+            <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
+              <li class="flex items-start gap-2 lg:flex-row-reverse"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>累计独立策划10+场线下活动，客户满意度95%以上</li>
+              <li class="flex items-start gap-2 lg:flex-row-reverse"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>对接B端客户需求，输出完整策划方案、宣传文案、标书制作、预算表</li>
+              <li class="flex items-start gap-2 lg:flex-row-reverse"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background: var(--accent);"></span>负责项目的视觉设计、图文宣传、视频制作与新媒体运营</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hidden lg:block lg:w-1/2 lg:pl-16"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Skills Section ===== -->
+<section id="skills" class="py-24 sm:py-32 px-5 sm:px-8">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <div class="section-label">Skills</div>
+      <h2 class="font-display italic text-4xl sm:text-5xl mb-6" style="letter-spacing: -0.02em;">核心技能</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="reveal grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <!-- Radar Chart -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div id="radarChart" style="width: 100%; max-width: 420px; height: 380px;"></div>
+      </div>
+
+      <!-- Skill Categories -->
+      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="glass-card p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: rgba(94,196,196,0.12); color: var(--cyan);">📋</div>
+            <h4 class="font-semibold text-sm">品牌策划</h4>
+          </div>
+          <p class="text-xs leading-relaxed" style="color: var(--text-muted);">品牌全案策划、活动方案撰写、品牌文案、IP内容策划、短视频全链路策划、图文视觉设计</p>
+        </div>
+        <div class="glass-card p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: rgba(232,120,110,0.12); color: var(--rose);">📱</div>
+            <h4 class="font-semibold text-sm">新媒体运营</h4>
+          </div>
+          <p class="text-xs leading-relaxed" style="color: var(--text-muted);">小红书/抖音/视频号/B站等平台运营、爆款内容打造、账号矩阵搭建、数据复盘优化</p>
+        </div>
+        <div class="glass-card p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: rgba(155,143,212,0.12); color: var(--violet);">🎬</div>
+            <h4 class="font-semibold text-sm">视频制作</h4>
+          </div>
+          <p class="text-xs leading-relaxed" style="color: var(--text-muted);">短视频全链路策划、脚本撰写、实拍运镜、PR/剪映剪辑、调色包装、字幕与动效制作</p>
+        </div>
+        <div class="glass-card p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: rgba(126,200,126,0.12); color: var(--green);">🛠️</div>
+            <h4 class="font-semibold text-sm">工具应用</h4>
+          </div>
+          <p class="text-xs leading-relaxed" style="color: var(--text-muted);">Adobe全家桶、剪映、达芬奇、可画、主流AI工具、智能体、Office办公套件</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools Bar -->
+    <div class="reveal mt-12 overflow-hidden">
+      <div class="marquee-track py-4">
+        <div class="flex gap-6">
+          <span class="tag">Adobe Premiere Pro</span><span class="tag">Adobe Photoshop</span>
+          <span class="tag">剪映</span><span class="tag">达芬奇</span><span class="tag">可画</span>
+          <span class="tag">AI智能工具</span><span class="tag">Office办公套件</span>
+          <span class="tag">小红书运营</span><span class="tag">抖音运营</span>
+          <span class="tag">视频号运营</span><span class="tag">B站运营</span>
+          <span class="tag">Adobe Premiere Pro</span><span class="tag">Adobe Photoshop</span>
+          <span class="tag">剪映</span><span class="tag">达芬奇</span><span class="tag">可画</span>
+          <span class="tag">AI智能工具</span><span class="tag">Office办公套件</span>
+          <span class="tag">小红书运营</span><span class="tag">抖音运营</span>
+          <span class="tag">视频号运营</span><span class="tag">B站运营</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Projects Section ===== -->
+<section id="projects" class="py-24 sm:py-32 px-5 sm:px-8" style="background: rgba(255,255,255,0.01);">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <div class="section-label">Portfolio</div>
+      <h2 class="font-display italic text-4xl sm:text-5xl mb-6" style="letter-spacing: -0.02em;">项目经验</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- Featured Project: 文字麻将 -->
+    <div class="reveal mb-20">
+      <div class="project-card p-6 sm:p-10">
+        <span class="project-number">01</span>
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+          <div class="lg:w-3/5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(212,168,83,0.12); color: var(--accent);">🏆 明星项目</div>
+            <h3 class="text-2xl sm:text-3xl font-bold mb-3">文创IP「文字麻将」全案策划</h3>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag">IP策划</span><span class="tag">品牌传播</span><span class="tag">综艺联动</span><span class="tag">新媒体运营</span><span class="tag">渠道拓展</span>
+            </div>
+            <p class="text-sm leading-relaxed mb-4" style="color: var(--text-secondary);">
+              从0到1主导现象级聚会桌游「文字麻将」的全生命周期品牌策划。独立输出IP定位报告、年度传播方案、跨界合作方案等核心文档，搭建完整品牌文案体系，统一全渠道传播调性。
+            </p>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              <div class="glass-card p-3 text-center">
+                <div class="metric-number text-xl" style="color: var(--accent);">18,000<span style="font-size:0.6em;">+</span></div>
+                <div class="text-xs mt-1" style="color: var(--text-muted);">首年销量（套）</div>
+              </div>
+              <div class="glass-card p-3 text-center">
+                <div class="metric-number text-xl" style="color: var(--accent);">500<span style="font-size:0.6em;">W+</span></div>
+                <div class="text-xs mt-1" style="color: var(--text-muted);">话题浏览量</div>
+              </div>
+              <div class="glass-card p-3 text-center">
+                <div class="metric-number text-xl" style="color: var(--accent);">6</div>
+                <div class="text-xs mt-1" style="color: var(--text-muted);">档S级综艺植入</div>
+              </div>
+              <div class="glass-card p-3 text-center">
+                <div class="metric-number text-xl" style="color: var(--accent);">50<span style="font-size:0.6em;">+</span></div>
+                <div class="text-xs mt-1" style="color: var(--text-muted);">城市/门店覆盖</div>
+              </div>
+            </div>
+
+            <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
+              植入综艺：《密室大逃脱7》《奔跑吧·天路篇》《快乐老友记·有风季》《欢迎来到蘑菇屋》等 · 微博之夜 · SNH48公演 · 小红书双十一桌游卡牌类目销量TOP1
+            </p>
+          </div>
+
+          <!-- Image Gallery -->
+          <div class="lg:w-2/5 grid grid-cols-2 gap-3">
+            <div class="img-card aspect-[3/4] cursor-pointer" onclick="openLightbox('https://s3p.nuwax.com:9443/5f6cdfec1dde423cb251132e30f22922.jpg')">
+              <img src="https://s3p.nuwax.com:9443/5f6cdfec1dde423cb251132e30f22922.jpg" alt="文字麻将商业影响力" loading="lazy">
+              <div class="img-overlay"><span class="text-xs">商业影响力</span></div>
+            </div>
+            <div class="img-card aspect-[3/4] cursor-pointer" onclick="openLightbox('https://s3p.nuwax.com:9443/e3e94099252747d0b2d5ce2a661a72b5.jpg')">
+              <img src="https://s3p.nuwax.com:9443/e3e94099252747d0b2d5ce2a661a72b5.jpg" alt="UGC征集活动" loading="lazy">
+              <div class="img-overlay"><span class="text-xs">UGC征集 & 综艺</span></div>
+            </div>
+            <div class="img-card aspect-[3/4] cursor-pointer" onclick="openLightbox('https://s3p.nuwax.com:9443/74be25cac6c54014985edf9ae0606c90.jpg')">
+              <img src="https://s3p.nuwax.com:9443/74be25cac6c54014985edf9ae0606c90.jpg" alt="综艺节目植入" loading="lazy">
+              <div class="img-overlay"><span class="text-xs">综艺矩阵</span></div>
+            </div>
+            <div class="img-card aspect-[3/4] cursor-pointer" onclick="openLightbox('https://s3p.nuwax.com:9443/64efaf22efbe475fa7c8367a33e267a1.jpg')">
+              <img src="https://s3p.nuwax.com:9443/64efaf22efbe475fa7c8367a33e267a1.jpg" alt="线下渠道覆盖" loading="lazy">
+              <div class="img-overlay"><span class="text-xs">线下渠道</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Project 2 -->
+      <div class="reveal project-card p-6 sm:p-8">
+        <span class="project-number">02</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(94,196,196,0.1); color: var(--cyan);">品牌全案</div>
+        <h3 class="text-xl font-bold mb-3">新华人寿森焱团队全案策划</h3>
+        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+          从0到1搭建品牌自媒体矩阵，负责全平台内容策划与文案调性把控。策划统筹50+场线下品牌沙龙和行业分享会，独立完成需求对接、方案撰写、预算管控、现场执行、复盘全流程。
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">自媒体搭建</span><span class="tag">活动策划</span><span class="tag">品牌传播</span>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="reveal project-card p-6 sm:p-8">
+        <span class="project-number">03</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(232,120,110,0.1); color: var(--rose);">国际文化</div>
+        <h3 class="text-xl font-bold mb-3">2023成都·欧洲文化季</h3>
+        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+          策划联合国非物质文化遗产「欧洲古董木偶展」及「捷克后现代主义画展」，联合捷克大使馆、西班牙领事馆，涵盖静态展、公开课、木偶戏剧演出、艺术家驻地工作坊等多元形式。
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">国际策展</span><span class="tag">文化交流</span><span class="tag">艺术家合作</span>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="reveal project-card p-6 sm:p-8">
+        <span class="project-number">04</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(155,143,212,0.1); color: var(--violet);">教育项目</div>
+        <h3 class="text-xl font-bold mb-3">新都区特殊教育学校 TED-Ed 项目</h3>
+        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+          打造以TED-Ed为核心的国际化中外人文交流平台。负责访校布展项目全案，涵盖TED-Ed俱乐部点位打造、国际理解教育楼梯改造、多功能厅TED演讲巨型垂幕等多元展示板块。
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">教育国际化</span><span class="tag">布展策划</span><span class="tag">TED-Ed</span>
+        </div>
+      </div>
+
+      <!-- Project 5 -->
+      <div class="reveal project-card p-6 sm:p-8">
+        <span class="project-number">05</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(126,200,126,0.1); color: var(--green);">社区项目</div>
+        <h3 class="text-xl font-bold mb-3">社区保障资金项目系列</h3>
+        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+          独立负责10+场社区活动全案策划，包括活力锦城趣味运动会、全邻友好与你童行、家润正街大运有我、零废弃低碳市集等项目。覆盖需求调研、方案策划、预算管控、执行与宣传全流程。
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">社区治理</span><span class="tag">活动策划</span><span class="tag">公益项目</span>
+        </div>
+      </div>
+
+      <!-- Project 6 -->
+      <div class="reveal project-card p-6 sm:p-8">
+        <span class="project-number">06</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(94,196,196,0.1); color: var(--cyan);">影视制作</div>
+        <h3 class="text-xl font-bold mb-3">影视短片 & 宣传片制作</h3>
+        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+          参与丁真珍珠文旅宣传拍摄项目、特丽达等企业广告宣传片制作、品饮汇观察-柠檬共和国短片等多个影视项目。擅长从脚本策划到后期制作的全链路把控。
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">宣传片</span><span class="tag">文旅拍摄</span><span class="tag">后期制作</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Projects Bar -->
+    <div class="reveal mt-8 flex flex-wrap justify-center gap-2">
+      <span class="tag py-2 px-4">2022 TED-Ed 青少年演讲课程</span>
+      <span class="tag py-2 px-4">清华大学体育产业研究中心尽调</span>
+      <span class="tag py-2 px-4">零废弃成都学校项目</span>
+      <span class="tag py-2 px-4">卡夫卡文化交流中心</span>
+      <span class="tag py-2 px-4">川渝妇女儿童公益大赛一等奖</span>
+      <span class="tag py-2 px-4">联合国开发计划署项目</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Awards & Honors ===== -->
+<section id="awards" class="py-24 sm:py-32 px-5 sm:px-8">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <div class="section-label">Honors</div>
+      <h2 class="font-display italic text-4xl sm:text-5xl mb-6" style="letter-spacing: -0.02em;">个人荣誉</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">🏅</div>
+        <h4 class="font-semibold text-sm mb-1">国家二级运动员</h4>
+        <p class="text-xs" style="color: var(--text-muted);">跆拳道项目</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">📷</div>
+        <h4 class="font-semibold text-sm mb-1">全国青年摄影大赛</h4>
+        <p class="text-xs" style="color: var(--text-muted);">2019年优秀入围奖</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">🌍</div>
+        <h4 class="font-semibold text-sm mb-1">国际特奥会认证</h4>
+        <p class="text-xs" style="color: var(--text-muted);">全球融合教师</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">🎓</div>
+        <h4 class="font-semibold text-sm mb-1">社会体育指导员</h4>
+        <p class="text-xs" style="color: var(--text-muted);">全国一级</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">🥋</div>
+        <h4 class="font-semibold text-sm mb-1">跆拳道黑带二段</h4>
+        <p class="text-xs" style="color: var(--text-muted);">中国跆拳道协会</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">⚖️</div>
+        <h4 class="font-semibold text-sm mb-1">国家一级裁判</h4>
+        <p class="text-xs" style="color: var(--text-muted);">跆拳道项目</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">🏛️</div>
+        <h4 class="font-semibold text-sm mb-1">卡夫卡文化交流中心</h4>
+        <p class="text-xs" style="color: var(--text-muted);">前负责人</p>
+      </div>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-3xl mb-3 transition-transform group-hover:scale-110 duration-300">🇰🇷</div>
+        <h4 class="font-semibold text-sm mb-1">韩国国技院</h4>
+        <p class="text-xs" style="color: var(--text-muted);">黑带一段</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact Section ===== -->
+<section id="contact" class="py-24 sm:py-32 px-5 sm:px-8" style="background: rgba(255,255,255,0.01);">
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="reveal mb-16">
+      <div class="section-label">Contact</div>
+      <h2 class="font-display italic text-4xl sm:text-5xl mb-6" style="letter-spacing: -0.02em;">联系我</h2>
+      <div class="section-divider"></div>
+      <p class="mt-6 text-sm" style="color: var(--text-secondary);">
+        期待与您沟通合作机会，共创品牌价值。
+      </p>
+    </div>
+
+    <div class="reveal grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <a href="tel:13980707151" class="glass-card p-6 text-center group cursor-pointer no-underline">
+        <div class="text-2xl mb-3 transition-transform group-hover:scale-110 duration-300">📞</div>
+        <div class="text-xs mb-1" style="color: var(--text-muted);">电话</div>
+        <div class="font-medium text-sm" style="color: var(--text-primary);">13980707151</div>
+      </a>
+      <a href="mailto:598609823@qq.com" class="glass-card p-6 text-center group cursor-pointer no-underline">
+        <div class="text-2xl mb-3 transition-transform group-hover:scale-110 duration-300">✉️</div>
+        <div class="text-xs mb-1" style="color: var(--text-muted);">邮箱</div>
+        <div class="font-medium text-sm" style="color: var(--text-primary);">598609823@qq.com</div>
+      </a>
+      <div class="glass-card p-6 text-center group">
+        <div class="text-2xl mb-3 transition-transform group-hover:scale-110 duration-300">📍</div>
+        <div class="text-xs mb-1" style="color: var(--text-muted);">地点</div>
+        <div class="font-medium text-sm" style="color: var(--text-primary);">四川省成都市</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="reveal mt-20 pt-10 border-t" style="border-color: var(--border);">
+      <p class="text-xs" style="color: var(--text-muted);">
+        © 2026 李科余 · 项目文案策划 &amp; 新媒体运营 · 个人作品集
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Lightbox ===== -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="项目图片" onclick="event.stopPropagation()">
+  <button class="absolute top-6 right-6 text-white/70 hover:text-white text-3xl leading-none" onclick="closeLightbox()">✕</button>
+</div>
+
+<script>
+// ===== Cursor Glow =====
+const glow = document.getElementById('cursorGlow');
+let mouseX = -999, mouseY = -999, smoothX = -999, smoothY = -999;
+
+document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+function animateGlow() {
+  smoothX += (mouseX - smoothX) * 0.08;
+  smoothY += (mouseY - smoothY) * 0.08;
+  glow.style.left = smoothX + 'px';
+  glow.style.top = smoothY + 'px';
+  glow.style.opacity = mouseX < 0 ? '0' : '1';
+  requestAnimationFrame(animateGlow);
+}
+animateGlow();
+
+// ===== Scroll Reveal =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== Lightbox =====
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+// ===== Skills Radar Chart =====
+(function() {
+  const dom = document.getElementById('radarChart');
+  if (!dom) return;
+  const chart = echarts.init(dom);
+  chart.setOption({
+    backgroundColor: 'transparent',
+    radar: {
+      center: ['50%', '50%'],
+      radius: '75%',
+      indicator: [
+        { name: '品牌策划', max: 100 },
+        { name: '新媒体运营', max: 100 },
+        { name: '视频制作', max: 100 },
+        { name: '项目统筹', max: 100 },
+        { name: '文案撰写', max: 100 },
+        { name: '视觉设计', max: 100 },
+      ],
+      axisName: {
+        color: '#a09b93',
+        fontSize: 11,
+        padding: [3, 5],
+        fontFamily: "'Noto Sans SC', sans-serif",
+      },
+      splitArea: {
+        areaStyle: { color: ['rgba(212,168,83,0.02)', 'rgba(212,168,83,0.02)'] }
+      },
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.06)' } },
+      axisLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } },
+    },
+    series: [{
+      type: 'radar',
+      data: [{ value: [92, 88, 85, 90, 95, 80], name: '李科余' }],
+      symbol: 'circle',
+      symbolSize: 5,
+      lineStyle: { color: '#d4a853', width: 2 },
+      areaStyle: { color: 'rgba(212,168,83,0.12)' },
+      itemStyle: { color: '#d4a853', borderColor: '#08090b', borderWidth: 2 },
+      label: { show: false },
+    }]
+  });
+  window.addEventListener('resize', () => chart.resize());
+})();
+</script>
+</body>
+</html>
